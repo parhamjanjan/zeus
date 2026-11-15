@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090d18">
+<title>Telegram Message Studio 3.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090d18;--panel:#101827;--panel2:#151f31;--line:#26364f;--text:#eaf0ff;--muted:#91a2bf;--purple:#8b7cff;--blue:#5d9cff;--cyan:#55d6e8;--green:#35d6a0;--red:#ff6684;--yellow:#ffc66d;--shadow:0 22px 70px #0005}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% -10%,#27366b66,transparent 40%),radial-gradient(ellipse at 95% 10%,#542c6a44,transparent 32%),var(--bg);color:var(--text);font-family:Vazirmatn,sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.app{max-width:1440px;margin:auto;padding:28px 24px 60px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:13px}.brandmark{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,var(--purple),#4f8eff);box-shadow:0 8px 28px #6f76ff55;font-size:23px}.brand h1{font-size:16px;letter-spacing:1.5px;margin:0;font-weight:900}.brand p{margin:2px 0 0;color:var(--muted);font-size:11px}.topmeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.pill{border:1px solid var(--line);background:#111b2b;padding:7px 11px;border-radius:30px;color:#b9c7e2;font-size:11px}
+.hero{position:relative;overflow:hidden;padding:34px 38px;border:1px solid #6675bc66;border-radius:26px;background:linear-gradient(115deg,#1b2850 0%,#242b57 48%,#402b65 100%);box-shadow:var(--shadow);margin-bottom:22px}.hero:after{content:"✦";position:absolute;left:7%;top:-56px;font-size:230px;color:#ffffff0b;transform:rotate(14deg)}.hero small{color:#c8d2ff;letter-spacing:2px;font-size:10px;font-weight:800}.hero h2{font-size:clamp(24px,4vw,38px);line-height:1.35;margin:9px 0 6px;font-weight:900}.hero p{color:#c2ccef;margin:0;font-size:13px}.hero-bottom{display:flex;align-items:center;gap:8px;margin-top:20px;flex-wrap:wrap}.hero-tag{border:1px solid #ffffff35;background:#ffffff0d;border-radius:30px;padding:6px 11px;font-size:10px;color:#e4e9ff}
+.layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(330px,.75fr);gap:20px;align-items:start}.maincol,.sidecol{display:grid;gap:18px}.card{background:linear-gradient(180deg,#121c2c,#0f1725);border:1px solid var(--line);border-radius:20px;padding:21px;box-shadow:0 12px 36px #0002;min-width:0}.cardhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:18px}.cardtitle{display:flex;align-items:center;gap:10px}.step{width:31px;height:31px;border-radius:10px;background:#7582ff20;color:#aeb8ff;display:grid;place-items:center;font-size:11px;font-weight:900}.cardtitle h3{margin:0;font-size:15px;font-weight:800}.cardtitle p{margin:3px 0 0;color:var(--muted);font-size:11px}
+.field{display:grid;gap:7px;margin:11px 0;min-width:0}.field label{font-size:11px;color:#aebdd7;font-weight:600}.field input,.field textarea,.field select,.input{width:100%;min-width:0;background:#0b1422;border:1px solid #30425e;border-radius:11px;padding:11px 12px;color:var(--text);outline:none;transition:.2s}.field textarea{resize:vertical;min-height:90px;line-height:1.8}.field input:focus,.field textarea:focus,.field select:focus{border-color:#8290ff;box-shadow:0 0 0 3px #7d8aff18}.field input::placeholder,.field textarea::placeholder{color:#647591}.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.btn{border:1px solid transparent;border-radius:11px;padding:10px 14px;color:white;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.18s;white-space:nowrap}.btn:hover{transform:translateY(-1px);filter:brightness(1.1)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.primary{background:linear-gradient(120deg,#776cff,#548fff);box-shadow:0 7px 20px #637aff2b}.secondary{background:#1a2940;border-color:#344968;color:#d7e3fb}.success{background:linear-gradient(120deg,#168c72,#27b994)}.danger{background:#421e2b;border-color:#73364a;color:#ff9db0}.ghost{background:transparent;border-color:#344968;color:#c7d4ed}.wide{width:100%}.smallbtn{padding:7px 10px;font-size:10px;border-radius:9px}
+.hint{padding:12px 14px;border:1px solid #3a5274;background:#17263b;border-radius:12px;color:#b7c9e7;font-size:11px;line-height:1.9}.hint.warn{border-color:#765b35;background:#322817;color:#f6d49e}.hint.ok{border-color:#285e54;background:#122b29;color:#a7e8d4}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.stat{background:#1a2940;border:1px solid #2d4260;color:#b9caff;padding:7px 11px;border-radius:9px;font-size:10px}
+.blocklist{display:grid;gap:12px;margin-top:14px}.block{border:1px solid #2c405e;background:linear-gradient(145deg,#172338,#111b2b);border-radius:16px;padding:15px;min-width:0}.blocktop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.blockname{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:800}.blocknum{background:#6e7dff22;color:#aab6ff;border-radius:8px;padding:5px 8px;font-size:10px}.blockactions{display:flex;gap:5px;flex-wrap:wrap}.blockactions button{border:1px solid #354967;background:#17263b;color:#c6d4ef;border-radius:8px;padding:6px 8px;font-size:10px}.blockactions .remove{color:#ff9caf;border-color:#704052;background:#321c2a}.blockbody{border-top:1px solid #263750;padding-top:10px}.checkline{display:flex;align-items:center;gap:9px;color:#c2cfe5;font-size:11px;margin-top:12px}.checkline input{accent-color:#8b7cff;width:15px;height:15px}
+.repeater{display:grid;gap:9px;padding:11px;background:#0c1523;border:1px dashed #354967;border-radius:12px;margin:8px 0}.repeatitem{display:grid;gap:8px;padding:10px;background:#141f30;border:1px solid #2b3e59;border-radius:10px}.repeathead{font-size:10px;color:#91a6c8;font-weight:800}
+.settings{display:grid;gap:12px}.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border:1px solid #293d58;background:#111d2d;border-radius:12px}.toggle strong{display:block;font-size:11px}.toggle small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.switch{appearance:none;width:39px;height:22px;border-radius:30px;background:#394960;position:relative;flex:none;cursor:pointer;transition:.2s}.switch:before{content:"";position:absolute;top:3px;right:3px;width:16px;height:16px;background:white;border-radius:50%;transition:.2s}.switch:checked{background:#786fff}.switch:checked:before{right:20px}
+.status{font-size:11px;line-height:1.9;color:#b9c9e4;padding:12px;border-radius:12px;background:#111e2e;border:1px solid #2d4360;min-height:45px;overflow-wrap:anywhere}.status.good{border-color:#286451;color:#a5e8d2}.status.bad{border-color:#77374c;color:#ff9fb2}.status.warn{border-color:#705a36;color:#f5d49a}
+.previewbox{background:#f4f6fb;color:#172033;border-radius:14px;padding:18px;min-height:140px;direction:rtl;line-height:1.9;overflow-wrap:anywhere}.previewbox h1,.previewbox h2,.previewbox h3{color:#273d76}.previewbox table{border-collapse:collapse;width:100%;margin:10px 0}.previewbox td,.previewbox th{border:1px solid #b7c1d4;padding:6px}.previewbox img,.previewbox video{max-width:100%;border-radius:8px}.previewbox pre{direction:ltr;text-align:left;background:#172033;color:#e5edff;padding:12px;border-radius:9px;overflow:auto}.previewbox blockquote{border-right:4px solid #7289ff;padding-right:12px;color:#44516a}.previewbox a{color:#345cba}.previewbox button{padding:6px 10px;border:0;border-radius:7px;background:#dce5ff}
+.codeout{white-space:pre-wrap;word-break:break-word;direction:ltr;text-align:left;background:#0a1320;color:#a8e6d4;border:1px solid #293f5d;border-radius:12px;padding:13px;font:11px/1.7 ui-monospace,monospace;max-height:330px;overflow:auto}
+.footer{text-align:center;color:#61728e;font-size:10px;padding:24px 0}.footer b{color:#9eaccc}
+.hidden{display:none!important}.muted{color:var(--muted)}.flex{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.right{margin-right:auto}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.sidecol{grid-template-columns:1fr 1fr}.sidecol .publishcard{grid-column:1/-1}}
+@media(max-width:650px){.app{padding:16px 12px 40px}.hero{padding:25px 20px}.card{padding:16px}.sidecol{grid-template-columns:1fr}.sidecol .publishcard{grid-column:auto}.row,.row3{grid-template-columns:1fr}.topbar{align-items:flex-start}.topmeta{justify-content:flex-end}.blocktop{align-items:flex-start;flex-direction:column}.blockactions{width:100%}.blockactions button{flex:1}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="brandmark">✦</div><div><h1>MESSAGE STUDIO</h1><p>Professional Telegram Rich Message Designer</p></div></div>
+    <div class="topmeta"><span class="pill">STUDIO 3.0</span><span class="pill">BOT API 10.3</span><span class="pill">LOCAL AUTOSAVE</span></div>
+  </header>
+  <section class="hero">
+    <small>CREATIVE PUBLISHING WORKSPACE</small>
+    <h2>هر پیام، یک تجربه‌ی متفاوت.</h2>
+    <p>پیام‌های غنی تلگرام را با بلوک‌های قابل‌تنظیم طراحی کن، پیش‌نمایش بگیر و مستقیم منتشر کن.</p>
+    <div class="hero-bottom"><span class="hero-tag">۱۹ نوع بلوک</span><span class="hero-tag">ویرایشگر پویا</span><span class="hero-tag">ذخیره خودکار</span><span class="hero-tag">پیش‌نمایش و اعتبارسنجی</span></div>
+  </section>
+
+  <div class="layout">
+    <main class="maincol">
+      <section class="card">
+        <div class="cardhead"><div class="cardtitle"><span class="step">01</span><div><h3>اتصال ربات</h3><p>توکن و مقصد انتشار را مشخص کن.</p></div></div></div>
+        <div class="row">
+          <div class="field"><label for="chatId">شناسه کانال</label><input id="chatId" placeholder="@channel_username یا -100123456789"></div>
+        </div>
+        <div class="hint warn">توکن داخل همین فایل قرار می‌گیرد و برای هر بازدیدکننده‌ای که سورس را ببیند قابل مشاهده است. توکن قبلیِ درج‌شده در فایل پایتون را با BotFather باطل کن؛ توکن تازه را فقط در خط <b>BOT_TOKEN</b> در انتهای اسکریپت قرار بده.</div>
+        <div class="flex" style="margin-top:12px"><button class="btn secondary" id="checkBot">بررسی اتصال ربات</button><span class="muted" id="botIdentity" style="font-size:11px"></span></div>
+      </section>
+
+      <section class="card">
+        <div class="cardhead"><div class="cardtitle"><span class="step">02</span><div><h3>طراحی پیام</h3><p>بلوک‌ها را اضافه کن، محتوا را بساز و ترتیبشان را تغییر بده.</p></div></div></div>
+        <div class="row">
+          <div class="field"><label for="blockType">نوع بلوک جدید</label><select id="blockType"></select></div>
+          <div class="field" style="align-self:end"><button class="btn primary wide" id="addBlock">＋ افزودن بلوک</button></div>
+        </div>
+        <div class="stats"><span class="stat" id="blockCount">۰ بلوک</span><span class="stat" id="spoilerCount">۰ اسپویلر</span><span class="stat" id="byteCount">۰ / ۳۲٬۷۶۸ بایت</span></div>
+        <div id="blockList" class="blocklist"></div>
+      </section>
+
+      <section class="card">
+        <div class="cardhead"><div class="cardtitle"><span class="step">03</span><div><h3>تنظیمات انتشار</h3><p>نحوه نمایش و رفتار پیام در تلگرام.</p></div></div></div>
+        <div class="settings">
+          <label class="toggle"><span><strong>راست‌چین کردن پیام (RTL)</strong><small>جهت نمایش پیام را راست‌به‌چپ تنظیم می‌کند.</small></span><input class="switch" type="checkbox" id="rtl" checked></label>
+          <label class="toggle"><span><strong>ارسال بدون اعلان</strong><small>پیام بدون صدای اعلان ارسال می‌شود.</small></span><input class="switch" type="checkbox" id="silent"></label>
+          <label class="toggle"><span><strong>محافظت از محتوا</strong><small>جلوگیری از فوروارد و ذخیره محتوا در تلگرام.</small></span><input class="switch" type="checkbox" id="protect"></label>
+        </div>
+      </section>
+    </main>
+
+    <aside class="sidecol">
+      <section class="card">
+        <div class="cardhead"><div class="cardtitle"><span class="step">04</span><div><h3>پیش‌نمایش و اعتبارسنجی</h3><p>HTML خروجی را قبل از انتشار بررسی کن.</p></div></div></div>
+        <button class="btn primary wide" id="previewBtn">◉ ساخت و بررسی پیام</button>
+        <div id="previewStatus" class="status" style="margin:12px 0">هنوز پیش‌نمایشی ساخته نشده است.</div>
+        <div id="renderPreview" class="previewbox">پیش‌نمایش پیام پس از ساخت در این قسمت نمایش داده می‌شود.</div>
+        <div class="field"><label>HTML نهایی</label><textarea id="htmlOutput" class="codeout" rows="7" readonly placeholder="HTML خروجی اینجا قرار می‌گیرد..."></textarea></div>
+        <button class="btn secondary wide" id="copyHtml">کپی HTML</button>
+      </section>
+
+      <section class="card publishcard">
+        <div class="cardhead"><div class="cardtitle"><span class="step">05</span><div><h3>انتشار نهایی</h3><p>ارسال پیام به کانال تلگرام.</p></div></div></div>
+        <button class="btn success wide" id="sendBtn">➤ ارسال نهایی به کانال</button>
+        <div id="sendStatus" class="status" style="margin-top:12px">آماده‌ی ارسال. ابتدا ربات را به کانال اضافه کن و دسترسی انتشار بده.</div>
+      </section>
+
+      <section class="card">
+        <div class="cardhead"><div class="cardtitle"><span class="step">06</span><div><h3>ذخیره خودکار و بازیابی</h3><p>پیش‌نویس در حافظه همین مرورگر ذخیره می‌شود.</p></div></div></div>
+        <div id="saveStatus" class="status good">ذخیره خودکار فعال است.</div>
+        <div class="flex" style="margin-top:12px"><button class="btn secondary" id="restoreBtn">↶ بازیابی</button><button class="btn danger" id="clearDraftBtn">پاک‌کردن پیش‌نویس</button></div>
+        <p class="muted" style="font-size:10px;line-height:1.8;margin-bottom:0">ذخیره‌سازی بر اساس دامنه و مرورگر است؛ با پاک‌کردن داده‌های سایت یا استفاده از دستگاه دیگر، پیش‌نویس در دسترس نخواهد بود. توکن ربات ذخیره نمی‌شود.</p>
+      </section>
+    </aside>
+  </div>
+  <footer class="footer">TELEGRAM MESSAGE STUDIO 3.0 <b>•</b> Built for focused publishing</footer>
+</div>
+
+<script>
+/* ==========================================================
+   TELEGRAM MESSAGE STUDIO 3.0
+   Static GitHub Pages edition
+   ========================================================== */
+
+/* توکن تازه را پس از باطل‌کردن توکن افشاشده، اینجا قرار بده.
+   نمونه: const BOT_TOKEN = "123456789:AA...";
+   هرگز توکن قبلیِ درج‌شده در فایل پایتون را استفاده نکن. */
+const BOT_TOKEN = "8833667347:AAGTE4sBtEJGHTK3k28t9eUIz8T3CrmOY6c";
+const API_ROOT = "https://api.telegram.org/bot";
+const MAX_BYTES = 32768;
+const STORAGE_KEY = "telegram_message_studio_v3_draft";
+const SAVE_VERSION = 1;
+
+const TYPES = [
+ ["📝 متن و عنوان","text"],["🔠 عنوان مستقل","heading"],["🖼️ اسلایدشو","slideshow"],
+ ["🎨 کلاژ تصاویر","collage"],["📂 آکاردئون","details"],["📊 جدول","table"],
+ ["🔘 دکمه‌ها","buttons"],["📋 لیست","list"],["💬 نقل قول","quote"],
+ ["∑ فرمول ریاضی","math"],["📍 نقشه","map"],["🖼️ تصویر","photo"],
+ ["🎬 ویدئو","video"],["🎵 صوت","audio"],["🎞️ انیمیشن","animation"],
+ ["📁 فایل","document"],["💻 کد برنامه‌نویسی","code"],["➖ جداکننده","divider"],
+ ["⚙️ HTML اختصاصی","custom"]
+];
+const $ = id => document.getElementById(id);
+let blocks = [];
+let saveTimer = null;
+let lastHTML = "";
+
+const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, ch => ({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[ch]));
+const attr = escapeHTML;
+const val = (obj,key) => obj[key] ?? "";
+const makeId = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}_${Math.random().toString(16).slice(2)}`);
+const typeLabel = type => (TYPES.find(x=>x[1]===type)||["بلوک","text"])[0];
+const bytes = str => new TextEncoder().encode(str).length;
+const isValidURL = value => {
+ try { const u=new URL(String(value).trim()); return ["http:","https:"].includes(u.protocol) && !!u.hostname; }
+ catch { return false; }
+};
+function checkedURL(value,label="URL"){
+ const v=String(value||"").trim();
+ if(!isValidURL(v)) throw new Error(`آدرس «${label}» باید یک URL معتبر HTTP/HTTPS باشد.`);
+ return attr(v);
+}
+function required(value,label){if(!String(value??"").trim())throw new Error(`فیلد «${label}» خالی است.`);}
+function numberValue(value,label,min,max){
+ const n=Number(value);
+ if(!Number.isFinite(n)||n<min||n>max)throw new Error(`${label} باید عددی بین ${min} و ${max} باشد.`);
+ return n;
+}
+function field(label,key,value="",placeholder="",type="text"){
+ return `<div class="field"><label>${escapeHTML(label)}</label><input data-key="${key}" type="${type}" value="${attr(value)}" placeholder="${attr(placeholder)}"></div>`;
+}
+function area(label,key,value="",placeholder="",rows=4){
+ return `<div class="field"><label>${escapeHTML(label)}</label><textarea data-key="${key}" rows="${rows}" placeholder="${attr(placeholder)}">${escapeHTML(value)}</textarea></div>`;
+}
+function selectField(label,key,options,value){
+ return `<div class="field"><label>${escapeHTML(label)}</label><select data-key="${key}">${options.map(([t,v])=>`<option value="${attr(v)}" ${String(value)===String(v)?"selected":""}>${escapeHTML(t)}</option>`).join("")}</select></div>`;
+}
+function checkField(label,key,value=false){
+ return `<label class="checkline"><input data-key="${key}" type="checkbox" ${value?"checked":""}>${escapeHTML(label)}</label>`;
+}
+function repeatInput(label,key,items,placeholder=""){
+ return `<div class="repeater" data-repeat="${key}">${items.map((v,i)=>`<div class="repeatitem"><div class="repeathead">${escapeHTML(label)} ${i+1}</div><input data-repeat-key="${key}" data-index="${i}" value="${attr(v)}" placeholder="${attr(placeholder)}"></div>`).join("")}</div>`;
+}
+function repeatCount(label,key,count,min=1,max=50){
+ return `<div class="field"><label>${label}</label><input data-key="${key}" type="number" min="${min}" max="${max}" value="${count}"></div>`;
+}
+function repeatObjects(label,key,items,fields){
+ return `<div class="repeater" data-repeat="${key}">${items.map((item,i)=>`<div class="repeatitem"><div class="repeathead">${label} ${i+1}</div>${fields.map(f=>f.type==="select"?selectField(f.label,`${key}.${i}.${f.key}`,f.options,item[f.key]??f.default):f.type==="textarea"?area(f.label,`${key}.${i}.${f.key}`,item[f.key]??"",f.placeholder||"",f.rows||3):field(f.label,`${key}.${i}.${f.key}`,item[f.key]??"",f.placeholder||"")).join("")}</div>`).join("")}</div>`;
+}
+function defaultData(type){
+ const common={id:makeId(),type,spoiler:false};
+ switch(type){
+ case"text":return {...common,title:"",body:""};
+ case"heading":return {...common,title:"",size:1};
+ case"slideshow":case"collage":return {...common,title:"",count:3,urls:["","",""],caption:"",credit:""};
+ case"details":return {...common,intro:"",count:2,items:[{title:"",body:""},{title:"",body:""}]};
+ case"table":return {...common,title:"",caption:"",rows:3,cols:3,cells:[["","",""],["","",""],["","",""]],bordered:true,striped:true,compact:false};
+ case"buttons":return {...common,count:2,align:"center",items:[{label:"",url:"",style:"default"},{label:"",url:"",style:"default"}]};
+ case"list":return {...common,title:"",count:3,ordered:false,items:["","",""]};
+ case"quote":return {...common,body:"",credit:"",expandable:false};
+ case"math":return {...common,title:"",formula:""};
+ case"map":return {...common,title:"",lat:"35.6892",lon:"51.3890",zoom:14,caption:""};
+ case"photo":case"video":case"audio":case"animation":return {...common,url:"",caption:""};
+ case"document":return {...common,url:"",caption:"",filename:""};
+ case"code":return {...common,language:"python",body:""};
+ case"custom":return {...common,html:""};
+ default:return common;
+ }
+}
+function renderFields(b){
+ const d=b;
+ switch(d.type){
+ case"text":return `<div class="row">${field("عنوان","title",d.title,"عنوان پیام")}</div>${area("متن","body",d.body,"متن اصلی پیام",6)}`;
+ case"heading":return `<div class="row">${field("عنوان","title",d.title,"عنوان اصلی")}${selectField("اندازه عنوان","size",Array.from({length:6},(_,i)=>[`H${i+1}`,i+1]),d.size)}</div>`;
+ case"slideshow":case"collage":{
+  const label=d.type==="slideshow"?"اسلایدشو":"کلاژ تصاویر";
+  return `<div class="row">${field("عنوان","title",d.title,"عنوان رسانه‌ها")}${repeatCount("تعداد تصاویر","count",d.count,2,50)}</div>${repeatInput("آدرس تصویر","urls",d.urls,"https://example.com/image.jpg")}<div class="row">${field("توضیحات","caption",d.caption,"توضیحات تصاویر")}${field("اعتبار / منبع","credit",d.credit,"نام منبع")}</div><div class="hint">برای ${label} حداقل دو تصویر لازم است.</div>`;
+ }
+ case"details":return `<div class="row">${field("عنوان بخش","intro",d.intro,"عنوان آکاردئون")}${repeatCount("تعداد بخش‌ها","count",d.count,1,30)}</div>${repeatObjects("بخش","items",d.items,[{key:"title",label:"عنوان",placeholder:"عنوان بخش"},{key:"body",label:"محتوا",type:"textarea",placeholder:"متن داخل بخش",rows:3}])}`;
+ case"table":return `<div class="row">${field("عنوان","title",d.title,"عنوان جدول")}${field("توضیحات","caption",d.caption,"توضیحات جدول")}</div><div class="row">${repeatCount("تعداد ردیف","rows",d.rows,1,30)}${repeatCount("تعداد ستون","cols",d.cols,1,20)}</div><div class="hint">ردیف اول به‌عنوان سرستون ساخته می‌شود.</div><div class="repeater">${d.cells.map((row,r)=>`<div class="repeatitem"><div class="repeathead">ردیف ${r+1}</div><div class="row">${row.map((v,c)=>`<div class="field"><label>سلول ${r+1}/${c+1}</label><input data-cell="${r}.${c}" value="${attr(v)}" placeholder="مقدار سلول"></div>`).join("")}</div></div>`).join("")}</div>${checkField("حاشیه جدول","bordered",d.bordered)}${checkField("ردیف‌های متناوب","striped",d.striped)}${checkField("حالت فشرده","compact",d.compact)}`;
+ case"buttons":return `<div class="row">${repeatCount("تعداد دکمه","count",d.count,1,20)}${selectField("چیدمان","align",[["چپ","left"],["وسط","center"],["راست","right"]],d.align)}</div>${repeatObjects("دکمه","items",d.items,[{key:"label",label:"متن دکمه",placeholder:"مشاهده"},{key:"url",label:"لینک دکمه",placeholder:"https://..."},{key:"style",label:"رنگ دکمه",type:"select",default:"default",options:[["معمولی","default"],["اصلی","primary"],["موفقیت","success"],["خطر","danger"],["لینکی","link"]]}])}`;
+ case"list":return `<div class="row">${field("عنوان","title",d.title,"عنوان لیست")}${repeatCount("تعداد موارد","count",d.count,1,50)}</div>${repeatInput("مورد","items",d.items,"متن مورد")}${checkField("لیست شماره‌دار","ordered",d.ordered)}`;
+ case"quote":return `${area("متن نقل قول","body",d.body,"متن نقل قول",5)}${field("نویسنده","credit",d.credit,"نام نویسنده")}${checkField("قابل باز و بسته شدن","expandable",d.expandable)}`;
+ case"math":return `<div class="row">${field("عنوان","title",d.title,"فرمول ریاضی")}</div>${area("LaTeX","formula",d.formula,"E = mc^2",4)}`;
+ case"map":return `<div class="row">${field("عنوان","title",d.title,"موقعیت مکانی")}${field("توضیحات","caption",d.caption,"توضیحات نقشه")}</div><div class="row">${field("Latitude","lat",d.lat,"35.6892")}${field("Longitude","lon",d.lon,"51.3890")}</div>${field("Zoom (0 تا 24)","zoom",d.zoom,"14","number")}`;
+ case"photo":case"video":case"audio":case"animation":case"document":return `${field("آدرس رسانه","url",d.url,"https://example.com/file")}${field("توضیحات","caption",d.caption,"توضیحات رسانه")}${d.type==="document"?field("نام فایل","filename",d.filename,"document.pdf"):""}`;
+ case"code":return `${selectField("زبان", "language",["python","javascript","html","css","json","bash","sql","text"].map(x=>[x,x]),d.language)}${area("کد","body",d.body,"کد برنامه‌نویسی",9)}`;
+ case"custom":return area("HTML اختصاصی تلگرام","html",d.html,"Rich HTML تلگرام",12);
+ case"divider":return `<div class="hint">یک جداکننده افقی به پیام اضافه خواهد شد.</div>`;
+ default:return `<div class="hint warn">نوع بلوک ناشناخته است.</div>`;
+ }
+}
+function captureBlockElement(block,root){
+ root.querySelectorAll("[data-key]").forEach(el=>{
+  const key=el.dataset.key;
+  if(key.includes(".")){
+   const [arr,index,prop]=key.split(".");
+   if(block[arr]?.[Number(index)])block[arr][Number(index)][prop]=el.type==="checkbox"?el.checked:el.value;
+  }else block[key]=el.type==="checkbox"?el.checked:el.value;
+ });
+ root.querySelectorAll("[data-repeat-key]").forEach(el=>{
+  const key=el.dataset.repeatKey,index=Number(el.dataset.index);
+  if(Array.isArray(block[key]))block[key][index]=el.value;
+ });
+ root.querySelectorAll("[data-cell]").forEach(el=>{
+  const [r,c]=el.dataset.cell.split(".").map(Number);
+  if(block.cells?.[r])block.cells[r][c]=el.value;
+ });
+}
+function syncAll(){
+ document.querySelectorAll(".block").forEach(root=>{
+  const b=blocks.find(x=>x.id===root.dataset.id);
+  if(b)captureBlockElement(b,root);
+ });
+}
+function updateStats(){
+ const count=blocks.length,spoilers=blocks.filter(b=>b.spoiler).length;
+ $("blockCount").textContent=`${count} بلوک`;
+ $("spoilerCount").textContent=`${spoilers} اسپویلر`;
+ try{$("byteCount").textContent=`${lastHTML?bytes(lastHTML):0} / ${MAX_BYTES.toLocaleString("fa-IR")} بایت`;}catch{}
+}
+function renderBlocks(){
+ $("blockList").innerHTML=blocks.map((b,i)=>`
+ <article class="block" data-id="${attr(b.id)}">
+  <div class="blocktop"><div class="blockname"><span class="blocknum">${String(i+1).padStart(2,"0")}</span>${escapeHTML(typeLabel(b.type))}</div>
+   <div class="blockactions"><button data-action="up" ${i===0?"disabled":""}>↑ بالا</button><button data-action="down" ${i===blocks.length-1?"disabled":""}>↓ پایین</button><button data-action="duplicate">▣ تکثیر</button><button class="remove" data-action="remove">حذف</button></div>
+  </div>
+  <div class="blockbody">${renderFields(b)}</div>
+  <label class="checkline"><input type="checkbox" data-spoiler ${b.spoiler?"checked":""}>🔒 فعال‌سازی اسپویلر برای این بلوک</label>
+ </article>`).join("");
+ updateStats();scheduleSave();
+}
+function addBlock(type="text",data=null){
+ blocks.push(data?structuredClone(data):defaultData(type));
+ renderBlocks();
+}
+function onBlockInput(event){
+ const root=event.target.closest(".block");if(!root)return;
+ const b=blocks.find(x=>x.id===root.dataset.id);if(!b)return;
+ captureBlockElement(b,root);
+ if(event.target.matches("[data-spoiler]"))b.spoiler=event.target.checked;
+ const key=event.target.dataset.key;
+ if(key==="count"||key==="rows"||key==="cols"){
+  const old=b;
+  if(key==="count"){
+   const n=numberValue(event.target.value,"تعداد",1,50);
+   if(["slideshow","collage","list"].includes(b.type))b.items=b.type==="list"?Array.from({length:n},(_,i)=>b.items[i]??""):b.items;
+   if(["slideshow","collage"].includes(b.type))b.urls=Array.from({length:n},(_,i)=>b.urls[i]??"");
+   if(b.type==="details")b.items=Array.from({length:n},(_,i)=>b.items[i]??{title:"",body:""});
+   if(b.type==="buttons")b.items=Array.from({length:n},(_,i)=>b.items[i]??{label:"",url:"",style:"default"});
+   b.count=n;
+  }
+  if(key==="rows"){const n=numberValue(event.target.value,"تعداد ردیف",1,30);b.cells=Array.from({length:n},(_,r)=>Array.from({length:b.cols},(_,c)=>b.cells[r]?.[c]??""));b.rows=n;}
+  if(key==="cols"){const n=numberValue(event.target.value,"تعداد ستون",1,20);b.cells=Array.from({length:b.rows},(_,r)=>Array.from({length:n},(_,c)=>b.cells[r]?.[c]??""));b.cols=n;}
+  renderBlocks();return;
+ }
+ scheduleSave();
+}
+$("blockList").addEventListener("input",onBlockInput);
+$("blockList").addEventListener("change",onBlockInput);
+$("blockList").addEventListener("click",e=>{
+ const btn=e.target.closest("[data-action]");if(!btn)return;
+ const root=btn.closest(".block"),i=blocks.findIndex(b=>b.id===root.dataset.id);if(i<0)return;
+ syncAll();const action=btn.dataset.action;
+ if(action==="up"&&i>0)[blocks[i-1],blocks[i]]=[blocks[i],blocks[i-1]];
+ if(action==="down"&&i<blocks.length-1)[blocks[i+1],blocks[i]]=[blocks[i],blocks[i+1]];
+ if(action==="duplicate"){const copy=structuredClone(blocks[i]);copy.id=makeId();blocks.splice(i+1,0,copy);}
+ if(action==="remove")blocks.splice(i,1);
+ renderBlocks();
+});
+TYPES.forEach(([label,value])=>$("blockType").add(new Option(label,value)));
+$("addBlock").addEventListener("click",()=>{syncAll();addBlock($("blockType").value);});
+["chatId","rtl","silent","protect"].forEach(id=>$(id).addEventListener("input",scheduleSave));
+["chatId","rtl","silent","protect"].forEach(id=>$(id).addEventListener("change",scheduleSave));
+
+function buildBlock(b){
+ const v=k=>b[k]??"";
+ let out="";
+ switch(b.type){
+ case"text":{
+  const title=String(v("title")).trim(),body=String(v("body")).trim();
+  if(!title&&!body)throw new Error("عنوان یا متن پیام را وارد کن.");
+  if(title)out+=`<h2>${escapeHTML(title)}</h2>`;
+  if(body)out+=`<p>${escapeHTML(body).replace(/\n/g,"<br/>")}</p>`;
+  break;
+ }
+ case"heading":
+  required(v("title"),"عنوان");out=`<h${numberValue(v("size"),"اندازه عنوان",1,6)}>${escapeHTML(v("title"))}</h${v("size")}>`;break;
+ case"slideshow":case"collage":{
+  if(!Array.isArray(v("urls"))||v("urls").length<2)throw new Error("حداقل دو تصویر لازم است.");
+  const media=v("urls").map(url=>`<img src="${checkedURL(url,"آدرس تصویر")}"/>`);
+  if(String(v("caption")).trim())media.push(`<figcaption>${escapeHTML(v("caption"))}${String(v("credit")).trim()?`<cite>${escapeHTML(v("credit"))}</cite>`:""}</figcaption>`);
+  const tag=b.type==="slideshow"?"tg-slideshow":"tg-collage";out=`<${tag}>${media.join("")}</${tag}>`;break;
+ }
+ case"details":
+  if(String(v("intro")).trim())out+=`<h3>${escapeHTML(v("intro"))}</h3>`;
+  (v("items")||[]).forEach(item=>{required(item.title,"عنوان آکاردئون");required(item.body,"محتوای آکاردئون");out+=`<details><summary>${escapeHTML(item.title)}</summary><p>${escapeHTML(item.body).replace(/\n/g,"<br/>")}</p></details>`;});break;
+ case"table":{
+  out="<table";
+  if(v("bordered"))out+=" bordered";if(v("striped"))out+=" striped";if(v("compact"))out+=" compact";out+=">";
+  if(String(v("caption")).trim())out+=`<caption>${escapeHTML(v("caption"))}</caption>`;
+  (v("cells")||[]).forEach((row,r)=>{out+="<tr>";row.forEach(cell=>{required(cell,"سلول جدول");const tag=r===0?"th":"td";out+=`<${tag}>${escapeHTML(cell)}</${tag}>`;});out+="</tr>";});
+  out+="</table>";if(String(v("title")).trim())out=`<h3>${escapeHTML(v("title"))}</h3>`+out;break;
+ }
+ case"buttons":
+  out=`<tg-button-row align="${attr(v("align"))}">`;
+  (v("items")||[]).forEach(item=>{required(item.label,"متن دکمه");const url=checkedURL(item.url,"لینک دکمه");out+=`<tg-button type="url" style="${attr(item.style)}" url="${url}">${escapeHTML(item.label)}</tg-button>`;});
+  out+="</tg-button-row>";break;
+ case"list":{
+  const tag=v("ordered")?"ol":"ul";out=`<${tag}>`;
+  (v("items")||[]).forEach(item=>{required(item,"مورد لیست");out+=`<li>${escapeHTML(item)}</li>`;});out+=`</${tag}>`;
+  if(String(v("title")).trim())out=`<h3>${escapeHTML(v("title"))}</h3>`+out;break;
+ }
+ case"quote":{
+  required(v("body"),"متن نقل قول");const expandable=v("expandable")?" expandable":"";
+  out=`<blockquote${expandable}>${escapeHTML(v("body")).replace(/\n/g,"<br/>")}${String(v("credit")).trim()?`<cite>${escapeHTML(v("credit"))}</cite>`:""}</blockquote>`;break;
+ }
+ case"math":
+  required(v("formula"),"فرمول");out=`<tg-math-block>${escapeHTML(v("formula"))}</tg-math-block>`;
+  if(String(v("title")).trim())out=`<h3>${escapeHTML(v("title"))}</h3>`+out;break;
+ case"map":{
+  const lat=Number(v("lat")),lon=Number(v("lon"));
+  if(!Number.isFinite(lat)||lat< -90||lat>90)throw new Error("Latitude نامعتبر است.");
+  if(!Number.isFinite(lon)||lon< -180||lon>180)throw new Error("Longitude نامعتبر است.");
+  out=`<tg-map lat="${lat}" long="${lon}" zoom="${numberValue(v("zoom"),"Zoom",0,24)}"/>`;
+  if(String(v("title")).trim())out=`<h3>${escapeHTML(v("title"))}</h3>`+out;
+  if(String(v("caption")).trim())out+=`<p>${escapeHTML(v("caption"))}</p>`;break;
+ }
+ case"photo":case"video":case"audio":case"animation":case"document":{
+  const url=checkedURL(v("url"),"آدرس رسانه"),caption=String(v("caption")).trim(),spoiler=b.spoiler?" tg-spoiler":"";
+  let media;
+  if(b.type==="photo")media=`<img src="${url}"${spoiler}/>`;
+  else if(b.type==="video"||b.type==="animation")media=`<video src="${url}"${spoiler}></video>`;
+  else if(b.type==="audio")media=`<audio src="tg://audio?id=audio_${attr(b.id)}"></audio>`;
+  else media=`<tg-document src="${url}"></tg-document>`;
+  out=caption?`<figure>${media}<figcaption>${escapeHTML(caption)}</figcaption></figure>`:media;break;
+ }
+ case"code":
+  required(v("body"),"کد");out=`<pre><code class="language-${attr(v("language"))}">${escapeHTML(v("body"))}</code></pre>`;break;
+ case"divider":out="<hr/>";break;
+ case"custom":required(v("html"),"HTML");out=v("html");break;
+ default:throw new Error(`نوع بلوک ناشناخته است: ${b.type}`);
+ }
+ if(b.spoiler&&!["photo","video","audio","animation","document"].includes(b.type))out=`<tg-spoiler>${out}</tg-spoiler>`;
+ return out;
+}
+function buildMessage(){
+ syncAll();if(!blocks.length)throw new Error("حداقل یک بلوک اضافه کن.");
+ const html=blocks.map(buildBlock).join("\n"),size=bytes(html);
+ if(size>MAX_BYTES)throw new Error(`حجم پیام ${size.toLocaleString("en-US")} بایت است. حداکثر مجاز ${MAX_BYTES.toLocaleString("en-US")} بایت است.`);
+ return html;
+}
+function setStatus(id,message,kind=""){
+ const el=$(id);el.className="status "+kind;el.textContent=message;
+}
+$("previewBtn").addEventListener("click",()=>{
+ try{
+  const html=buildMessage();lastHTML=html;$("htmlOutput").value=html;
+  $("renderPreview").innerHTML=html;
+  setStatus("previewStatus",`پیام با موفقیت ساخته شد • ${blocks.length} بلوک • ${bytes(html).toLocaleString("en-US")} بایت • ${html.length.toLocaleString("en-US")} کاراکتر`,"good");
+  updateStats();scheduleSave();
+ }catch(e){setStatus("previewStatus",e.message,"bad");}
+});
+$("copyHtml").addEventListener("click",async()=>{
+ const value=$("htmlOutput").value;if(!value){setStatus("previewStatus","ابتدا پیام را بساز.","warn");return;}
+ try{await navigator.clipboard.writeText(value);setStatus("previewStatus","HTML با موفقیت کپی شد.","good");}
+ catch{ $("htmlOutput").focus();$("htmlOutput").select();setStatus("previewStatus","کپی خودکار در این مرورگر مجاز نیست؛ متن انتخاب شده است.","warn");}
+});
+
+async function telegramCall(token,method,payload={}){
+ const response=await fetch(`${API_ROOT}${token}/${method}`,{
+  method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)
+ });
+ let data;try{data=await response.json();}catch{throw new Error(`پاسخ نامعتبر تلگرام (HTTP ${response.status})`);}
+ if(!response.ok||!data.ok)throw new Error(`Telegram API ${data.error_code||response.status}: ${data.description||"Unknown error"}`);
+ return data.result;
+}
+function buildRichMedia(){
+ return blocks.filter(b=>b.type==="audio").map(b=>({
+  id:`audio_${b.id}`,
+  media:{type:"audio",media:String(b.url||"").trim()}
+ }));
+}
+async function checkConnection(){
+ const token= BOT_TOKEN;
+ if(!token){setStatus("sendStatus","توکن را در خط BOT_TOKEN سورس قرار بده یا در فیلد بالا وارد کن.","warn");return null;}
+ const me=await telegramCall(token,"getMe");
+ $("botIdentity").textContent=`متصل به @${me.username||me.first_name}`;
+ return {token,me};
+}
+$("checkBot").addEventListener("click",async()=>{
+ try{setStatus("sendStatus","در حال بررسی هویت ربات...");const c=await checkConnection();if(c)setStatus("sendStatus",`اتصال برقرار است: @${c.me.username||c.me.first_name}`,"good");}
+ catch(e){setStatus("sendStatus",e.message,"bad");}
+});
+$("sendBtn").addEventListener("click",async()=>{
+ const btn=$("sendBtn");btn.disabled=true;
+ try{
+  const html=buildMessage(),token= BOT_TOKEN,chatId=$("chatId").value.trim();
+  if(!token)throw new Error("توکن ربات را در سورس یا فیلد توکن وارد کن.");
+  required(chatId,"شناسه کانال");
+  setStatus("sendStatus","۱. بررسی هویت ربات...");
+  const me=await telegramCall(token,"getMe");
+  setStatus("sendStatus",`۲. ربات @${me.username||me.first_name} شناسایی شد. در حال بررسی دسترسی کانال...`);
+  const member=await telegramCall(token,"getChatMember",{chat_id:chatId,user_id:me.id});
+  const status=member.status;
+  if(!["administrator","creator"].includes(status))throw new Error("ربات مدیر کانال نیست.");
+  if(status==="administrator"&&!member.can_post_messages)throw new Error("ربات مجوز ارسال پست ندارد.");
+  setStatus("sendStatus","۳. دسترسی تأیید شد. در حال ارسال پیام...");
+  const result=await telegramCall(token,"sendRichMessage",{
+   chat_id:chatId,
+   rich_message:{html,is_rtl:$("rtl").checked,media:buildRichMedia()},
+   disable_notification:$("silent").checked,
+   protect_content:$("protect").checked
+  });
+  setStatus("sendStatus",`پیام با موفقیت ارسال شد • Message ID: ${result.message_id} • Chat ID: ${result.chat?.id}`,"good");
+ }catch(e){
+  const msg=(e instanceof TypeError&&/fetch/i.test(e.message))?"ارتباط مستقیم مرورگر با Telegram API برقرار نشد. احتمالاً محدودیت CORS یا شبکه وجود دارد؛ در این حالت نسخه بدون بک‌اند روی این مرورگر قادر به ارسال نیست.":e.message;
+  setStatus("sendStatus",msg,"bad");
+ }finally{btn.disabled=false;}
+});
+
+function collectDraft(){
+ syncAll();
+ return {version:SAVE_VERSION,saved_at:Date.now(),blocks,settings:{
+  chatId:$("chatId").value,rtl:$("rtl").checked,silent:$("silent").checked,protect:$("protect").checked
+ }};
+}
+function scheduleSave(){
+ clearTimeout(saveTimer);saveTimer=setTimeout(saveDraft,350);
+}
+function saveDraft(){
+ try{
+  const data=collectDraft();localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+  setStatus("saveStatus",`ذخیره شد • ${new Date().toLocaleTimeString("fa-IR")}`,"good");
+ }catch(e){setStatus("saveStatus",`خطا در ذخیره‌سازی: ${e.message}`,"bad");}
+}
+function restoreDraft(manual=false){
+ try{
+  const raw=localStorage.getItem(STORAGE_KEY);
+  if(!raw){if(manual)setStatus("saveStatus","پیش‌نویس ذخیره‌شده‌ای پیدا نشد.","warn");return false;}
+  const data=JSON.parse(raw);
+  if(data.version!==SAVE_VERSION)throw new Error("نسخه پیش‌نویس با این نسخه سازگار نیست.");
+  if(!Array.isArray(data.blocks)||data.blocks.length>200)throw new Error("ساختار یا تعداد بلوک‌های ذخیره‌شده نامعتبر است.");
+  blocks=data.blocks.map(b=>({...defaultData(TYPES.some(t=>t[1]===b.type)?b.type:"text"),...b,id:b.id||makeId()}));
+  const s=data.settings||{};$("chatId").value=s.chatId||"";
+  $("rtl").checked=s.rtl!==false;$("silent").checked=!!s.silent;$("protect").checked=!!s.protect;
+  renderBlocks();
+  const when=data.saved_at?new Date(data.saved_at).toLocaleString("fa-IR"):"";
+  setStatus("saveStatus",`پیش‌نویس بازیابی شد ${when?`• ${when}`:""}`,"good");
+  return true;
+ }catch(e){setStatus("saveStatus",`بازیابی ناموفق: ${e.message}`,"bad");return false;}
+}
+$("restoreBtn").addEventListener("click",()=>restoreDraft(true));
+$("clearDraftBtn").addEventListener("click",()=>{
+ if(!confirm("پیش‌نویس ذخیره‌شده در این مرورگر پاک شود؟"))return;
+ localStorage.removeItem(STORAGE_KEY);setStatus("saveStatus","پیش‌نویس ذخیره‌شده پاک شد.","good");
+});
+
+if(!restoreDraft()||blocks.length===0){blocks=[];addBlock("text");}
+else renderBlocks();
+updateStats();
+</script>
+</body>
+</html>
