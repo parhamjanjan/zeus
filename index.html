@@ -109,9 +109,6 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
    Static GitHub Pages edition
    ========================================================== */
 
-/* توکن تازه را پس از باطل‌کردن توکن افشاشده، اینجا قرار بده.
-   نمونه: const BOT_TOKEN = "123456789:AA...";
-   هرگز توکن قبلیِ درج‌شده در فایل پایتون را استفاده نکن. */
 const BOT_TOKEN = "8833667347:AAGTE4sBtEJGHTK3k28t9eUIz8T3CrmOY6c";
 const API_ROOT = "https://api.telegram.org/bot";
 const MAX_BYTES = 32768;
@@ -189,39 +186,7 @@ function defaultData(type){
  case"quote":return {...common,body:"",credit:"",expandable:false};
  case"math":return {...common,title:"",formula:""};
  case"map":return {...common,title:"",lat:"35.6892",lon:"51.3890",zoom:14,caption:""};
- case"photo":case"video":case"audio":case"animation":case"document":{
-  const url=checkedURL(v("url"),"آدرس رسانه");
-
-  // شناسه یکسان برای HTML و rich_message.media
-  const mediaId=`media_${String(b.id).replace(/[^A-Za-z0-9_-]/g,"_")}`;
-
-  const caption=String(v("caption")).trim();
-  const spoiler=b.spoiler?" tg-spoiler":"";
-
-  let media;
-
-  if(b.type==="photo"){
-   media=`<img src="tg://photo?id=${mediaId}"${spoiler}/>`;
-  }
-  else if(b.type==="video"){
-   media=`<video src="tg://video?id=${mediaId}"${spoiler}></video>`;
-  }
-  else if(b.type==="animation"){
-   media=`<video src="tg://video?id=${mediaId}"${spoiler}></video>`;
-  }
-  else if(b.type==="audio"){
-   media=`<audio src="tg://audio?id=${mediaId}"></audio>`;
-  }
-  else{
-   media=`<tg-document src="tg://document?id=${mediaId}"></tg-document>`;
-  }
-
-  out=caption
-   ? `<figure>${media}<figcaption>${escapeHTML(caption)}</figcaption></figure>`
-   : media;
-
-  break;
- };
+ case"photo":case"video":case"audio":case"animation":return {...common,url:"",caption:""};
  case"document":return {...common,url:"",caption:"",filename:""};
  case"code":return {...common,language:"python",body:""};
  case"custom":return {...common,html:""};
@@ -390,10 +355,10 @@ function buildBlock(b){
  case"photo":case"video":case"audio":case"animation":case"document":{
   const url=checkedURL(v("url"),"آدرس رسانه"),caption=String(v("caption")).trim(),spoiler=b.spoiler?" tg-spoiler":"";
   let media;
-  if(b.type==="photo")media=`<img src="${url}"${spoiler}/>`;
-  else if(b.type==="video"||b.type==="animation")media=`<video src="${url}"${spoiler}></video>`;
+  if(b.type==="photo")media=`<img src="tg://photo?id=photo_${attr(b.id)}"${spoiler}/>`;
+  else if(b.type==="video"||b.type==="animation")media=`<video src="tg://video?id=video_${attr(b.id)}"${spoiler}></video>`;
   else if(b.type==="audio")media=`<audio src="tg://audio?id=audio_${attr(b.id)}"></audio>`;
-  else media=`<tg-document src="${url}"></tg-document>`;
+  else media=`<tg-document src="tg://document?id=document_${attr(b.id)}"></tg-document>`;
   out=caption?`<figure>${media}<figcaption>${escapeHTML(caption)}</figcaption></figure>`:media;break;
  }
  case"code":
@@ -437,36 +402,13 @@ async function telegramCall(token,method,payload={}){
  return data.result;
 }
 function buildRichMedia(){
-
- const supportedTypes = new Set([
-  "photo",
-  "video",
-  "audio",
-  "animation",
-  "document"
- ]);
-
- return blocks
-  .filter(b => supportedTypes.has(b.type))
-  .map(b => {
-
-   const url = checkedURL(
-    b.url,
-    `آدرس رسانه (${typeLabel(b.type)})`
-   );
-
-   const id = `media_${String(b.id).replace(/[^A-Za-z0-9_-]/g,"_")}`;
-
-   return {
-    id: id,
-    media: {
-     type: b.type,
-     media: url
-    }
-   };
-
-  });
-
+ return blocks.filter(b=>["audio","video","photo","animation","document"].includes(b.type)).map(b=>{
+  const type = b.type === "animation" ? "video" : (b.type === "document" ? "document" : b.type);
+  return {
+   id: `${type}_${b.id}`,
+   media: { type, media: String(b.url || "").trim() }
+  };
+ });
 }
 async function checkConnection(){
  const token= BOT_TOKEN;
